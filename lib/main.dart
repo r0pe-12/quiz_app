@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import 'widgets/question.dart';
+import 'widgets/answer.dart';
 
 // void main(List<String> args) {
 //   runApp(const MyApp());
