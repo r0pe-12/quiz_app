@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
   final VoidCallback handler;
+  final String answerText;
 
-  const Answer({required this.handler, super.key});
+  const Answer({required this.handler, super.key, required this.answerText});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class Answer extends StatelessWidget {
           elevation: MaterialStateProperty.all(1),
         ),
         onPressed: handler,
-        child: const Text('Answer'),
+        child: Text(answerText),
       ),
     );
   }
