@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 //   runApp(const MyApp());
 // }
 
-void main(List<String> args) => runApp(MyApp());
+void main(List<String> args) => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyAppState();
