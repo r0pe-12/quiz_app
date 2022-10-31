@@ -19,6 +19,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final questions = const [
+    {
+      'questionText': "What's your favorite color?",
+      'answers': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': "What's your favorite animal?",
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'questionText': "Who's your favorite instructor?",
+      'answers': ['Petar', 'Petar', 'Petar', 'Petar'],
+    },
+  ];
+
   int _questionIndex = 0;
 
   void _answerQuestion() {
@@ -27,38 +42,47 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _startOver() {
+    setState(() {
+      _questionIndex = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    const questions = [
-      {
-        'questionText': "What's your favorite color?",
-        'answers': ['Black', 'Red', 'Green', 'White'],
-      },
-      {
-        'questionText': "What's your favorite animal?",
-        'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
-      },
-      {
-        'questionText': "Who's your favorite instructor?",
-        'answers': ['Petar', 'Petar', 'Petar', 'Petar'],
-      },
-    ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text('My First App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(
-              questionText: questions[_questionIndex]['questionText'] as String,
-            ),
-            ...(questions[_questionIndex]['answers'] as List).map((answer) {
-              return Answer(handler: _answerQuestion, answerText: answer);
-            }).toList(),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: <Widget>[
+                  Question(
+                    questionText:
+                        questions[_questionIndex]['questionText'] as String,
+                  ),
+                  ...(questions[_questionIndex]['answers'] as List)
+                      .map((answer) {
+                    return Answer(handler: _answerQuestion, answerText: answer);
+                  }).toList(),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Question(questionText: 'You did it'),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                    ),
+                    onPressed: _startOver,
+                    child: const Text('Start over'),
+                  ),
+                ],
+              ),
       ),
     );
   }
