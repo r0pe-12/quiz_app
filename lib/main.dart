@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/question.dart';
-import 'widgets/answer.dart';
+import 'widgets/quiz.dart';
+import 'widgets/result.dart';
 
 // void main(List<String> args) {
 //   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final questions = const [
+  final _questions = const [
     {
       'questionText': "What's your favorite color?",
       'answers': ['Black', 'Red', 'Green', 'White'],
@@ -56,33 +57,12 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('My First App'),
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: <Widget>[
-                  Question(
-                    questionText:
-                        questions[_questionIndex]['questionText'] as String,
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List)
-                      .map((answer) {
-                    return Answer(handler: _answerQuestion, answerText: answer);
-                  }).toList(),
-                ],
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questionAnswerPair: _questions[_questionIndex],
+                handler: _answerQuestion,
               )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Question(questionText: 'You did it'),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.cyan),
-                    ),
-                    onPressed: _startOver,
-                    child: const Text('Start over'),
-                  ),
-                ],
-              ),
+            : Result(startOver: _startOver),
       ),
     );
   }
